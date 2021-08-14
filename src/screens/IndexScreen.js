@@ -10,16 +10,21 @@ import BlogContext from "../contexts/BlogContext";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Index = () => {
-  const { blogPost, addBlog } = useContext(BlogContext);
+  const { blogPost, addBlog, delBlog } = useContext(BlogContext);
   return (
-    <View style={{ padding: 20, }}>
+    <View style={{ padding: 20 }}>
       <FlatList
+      showsVerticalScrollIndicator={false}
         data={blogPost}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => (
           <View style={Styles.row}>
-            <Text style={Styles.listText}>{item.title}</Text>
-            <FontAwesome name="trash" size={24} color="black" />
+            <Text style={Styles.listText}>
+              {item.title} - {item.id}
+            </Text>
+            <TouchableOpacity onPress={() => delBlog(item.id)}>
+              <FontAwesome name="trash" size={24} color="black" />
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -40,7 +45,7 @@ const Styles = StyleSheet.create({
     padding: 5,
     alignItems: "center",
     marginBottom: 8,
-    borderRadius:6
+    borderRadius: 6,
   },
   listText: {
     fontSize: 20,
@@ -51,14 +56,14 @@ const Styles = StyleSheet.create({
     backgroundColor: "lightblue",
     textAlign: "center",
     padding: 16,
-    alignSelf:'center',
+    alignSelf: "center",
     borderRadius: 6,
     width: 200,
   },
   btnText: {
     fontSize: 22,
     fontWeight: "bold",
-    textAlign:'center',
+    textAlign: "center",
     color: "#414A4C",
   },
 });
