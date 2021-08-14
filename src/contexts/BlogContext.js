@@ -3,9 +3,17 @@ import React, { useState } from "react";
 const BlogContext = React.createContext();
 
 export const BlogProvider = ({ children }) => {
-  const [val, setVal] = useState(0);
+  const [blog, setBlog] = useState([]);
+
+  const addBlog = () => {
+    setBlog((previousBlog) => [
+      ...previousBlog,
+      { title: `This is Blog #${blog.length + 1}` },
+    ]);
+  };
+
   return (
-    <BlogContext.Provider value={{ val, setVal }}>
+    <BlogContext.Provider value={{ blogPost: blog, addBlog }}>
       {children}
     </BlogContext.Provider>
   );
