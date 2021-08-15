@@ -1,14 +1,29 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Foundation } from "@expo/vector-icons";
 
 const ShowScreen = ({ route, navigation }) => {
-  const { id, title, content } = route.params;
-  console.log(">>>>>>", id, title);
+  const { id, title, content, newTitle, newContent } = route.params;
   return (
     <View style={Styles.root}>
       <View style={Styles.container}>
-        <Text style={Styles.title}>Title: {title}</Text>
-        <Text style={Styles.content}>Content: {content}</Text>
+        <View style={Styles.iconicTitle}>
+          <Text style={Styles.title}>Title: {newTitle ? newTitle : title}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("EditBlog", {
+                id,
+                title,
+                content,
+              });
+            }}
+          >
+            <Foundation name="pencil" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <Text style={Styles.content}>
+          Content: {newContent ? newContent : content}
+        </Text>
       </View>
     </View>
   );
@@ -23,18 +38,23 @@ const Styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#636e72",
     padding: 20,
-    maxHeight: 'auto',
+    maxHeight: "auto",
     borderRadius: 6,
-    backgroundColor:'#ffffff'
+    backgroundColor: "#ffffff",
   },
-  title:{
+  iconicTitle: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  title: {
     fontSize: 28,
     color: "#414A4C",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
-  content:{
+  content: {
     fontSize: 20,
     color: "#414A4C",
-  }
+  },
 });
 export default ShowScreen;
