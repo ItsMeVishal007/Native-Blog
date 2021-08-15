@@ -39,12 +39,13 @@ const Index = ({ navigation }) => {
               navigation.navigate("Show", {
                 id: item.id,
                 title: item.title,
+                content: item.content
               });
             }}
           >
             <View style={Styles.row}>
               <Text style={Styles.listText}>
-                {item.title} - {item.id}
+                {item.title.substr(0, 20)}
               </Text>
               <TouchableOpacity onPress={() => delBlog(item.id)}>
                 <FontAwesome name="trash" size={24} color="black" />
@@ -54,7 +55,7 @@ const Index = ({ navigation }) => {
         )}
       />
 
-      <TouchableOpacity style={Styles.btn} onPress={() => addBlog()}>
+      <TouchableOpacity style={Styles.btn} onPress={() => {navigation.navigate("CreateBlog")}}>
         <Text style={Styles.btnText}>add Blog</Text>
       </TouchableOpacity>
     </View>
@@ -79,18 +80,19 @@ const Styles = StyleSheet.create({
     fontWeight: "bold",
   },
   btn: {
-    backgroundColor: "lightblue",
+    backgroundColor: "#00cec9",
     textAlign: "center",
     padding: 16,
     alignSelf: "center",
     borderRadius: 6,
     width: 200,
+   
   },
   btnText: {
     fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#414A4C",
+    color: "#ecf0f1",
   },
 });
 
