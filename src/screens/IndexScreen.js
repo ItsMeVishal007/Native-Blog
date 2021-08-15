@@ -6,11 +6,26 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import BlogContext from "../contexts/BlogContext";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation }) => {
   const { blogPost, addBlog, delBlog } = useContext(BlogContext);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("CreateBlog");
+          }}
+        >
+          <Feather name="plus" size={24} color="black" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <View style={{ padding: 20 }}>
