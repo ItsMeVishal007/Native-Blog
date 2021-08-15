@@ -57,7 +57,7 @@ const EditScreen = ({ route, navigation }) => {
           });
         }}
       >
-        <Text style={Style.btnText}>Create Blog</Text>
+        <Text style={Style.btnText}>Edit Blog</Text>
       </TouchableOpacity>
     </View>
   );
