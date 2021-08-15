@@ -9,25 +9,36 @@ import {
 import BlogContext from "../contexts/BlogContext";
 import { FontAwesome } from "@expo/vector-icons";
 
-const Index = () => {
+const Index = ({ navigation }) => {
   const { blogPost, addBlog, delBlog } = useContext(BlogContext);
+
   return (
     <View style={{ padding: 20 }}>
       <FlatList
-      showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         data={blogPost}
         keyExtractor={(item) => item.title}
         renderItem={({ item }) => (
-          <View style={Styles.row}>
-            <Text style={Styles.listText}>
-              {item.title} - {item.id}
-            </Text>
-            <TouchableOpacity onPress={() => delBlog(item.id)}>
-              <FontAwesome name="trash" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Show", {
+                id: item.id,
+                title: item.title,
+              });
+            }}
+          >
+            <View style={Styles.row}>
+              <Text style={Styles.listText}>
+                {item.title} - {item.id}
+              </Text>
+              <TouchableOpacity onPress={() => delBlog(item.id)}>
+                <FontAwesome name="trash" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
         )}
       />
+
       <TouchableOpacity style={Styles.btn} onPress={() => addBlog()}>
         <Text style={Styles.btnText}>add Blog</Text>
       </TouchableOpacity>
