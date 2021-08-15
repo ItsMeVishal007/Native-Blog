@@ -55,9 +55,6 @@ const Index = ({ navigation }) => {
         )}
       />
 
-      <TouchableOpacity style={Styles.btn} onPress={() => {navigation.navigate("CreateBlog")}}>
-        <Text style={Styles.btnText}>add Blog</Text>
-      </TouchableOpacity>
     </View>
   );
 };

@@ -41,8 +41,8 @@ const EditScreen = ({ route, navigation }) => {
           setIsEditing((prevVal) => ({
             ...prevVal,
             content: true,
-          }));
-          setNewContent(text);
+          })); 
+          setNewContent(text); 
         }}
       />
 
@@ -55,6 +55,7 @@ const EditScreen = ({ route, navigation }) => {
             newTitle,
             newContent,
           });
+          //redirect directly to other page may occure error incase of remote db data transmission in that case you will add thirst parameter as a callback in which you specify ur navigation func and then call it on you context page main function like callback();
         }}
       >
         <Text style={Style.btnText}>Edit Blog</Text>
