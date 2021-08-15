@@ -3,17 +3,27 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Foundation } from "@expo/vector-icons";
 
 const ShowScreen = ({ route, navigation }) => {
-  const { id, title, content } = route.params;
+  const { id, title, content, newTitle, newContent } = route.params;
   return (
     <View style={Styles.root}>
       <View style={Styles.container}>
         <View style={Styles.iconicTitle}>
-          <Text style={Styles.title}>Title: {title}</Text>
-          <TouchableOpacity>
+          <Text style={Styles.title}>Title: {newTitle ? newTitle : title}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("EditBlog", {
+                id,
+                title,
+                content,
+              });
+            }}
+          >
             <Foundation name="pencil" size={24} color="black" />
           </TouchableOpacity>
         </View>
-        <Text style={Styles.content}>Content: {content}</Text>
+        <Text style={Styles.content}>
+          Content: {newContent ? newContent : content}
+        </Text>
       </View>
     </View>
   );

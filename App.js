@@ -7,6 +7,7 @@ import { BlogProvider } from "./src/contexts/BlogContext";
 import Index from "./src/screens/IndexScreen";
 import ShowScreen from "./src/screens/ShowScreen";
 import CreateScreen from "./src/screens/CreateScreen";
+import EditScreen from "./src/screens/EditScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ export default function App() {
           <Stack.Screen name="BlogList" component={Index} />
           <Stack.Screen name="Show" component={ShowScreen} />
           <Stack.Screen name="CreateBlog" component={CreateScreen} />
+          <Stack.Screen name="EditBlog" component={EditScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </BlogProvider>
