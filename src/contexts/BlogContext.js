@@ -44,7 +44,7 @@ export const BlogProvider = ({ children }) => {
   return (
     <BlogContext.Provider
       value={{ blogPost: state, addBlog, delBlog, EditBlog }}
-    >
+    > 
       {children}
     </BlogContext.Provider>
   );
