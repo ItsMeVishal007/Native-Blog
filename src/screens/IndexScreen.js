@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Text,
   View,
@@ -11,7 +11,16 @@ import BlogContext from "../contexts/BlogContext";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Index = ({ navigation }) => {
-  const { blogPost, addBlog, delBlog } = useContext(BlogContext);
+  const { blogPost, addBlog, delBlog, findJsonBlogs } = useContext(BlogContext);
+
+  useEffect(() => {
+    findJsonBlogs();
+    const listner = navigation.addListener("focus", () => {
+      findJsonBlogs();
+    });
+
+    return listner;
+  }, []);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -39,14 +48,12 @@ const Index = ({ navigation }) => {
               navigation.navigate("Show", {
                 id: item.id,
                 title: item.title,
-                content: item.content
+                content: item.content,
               });
             }}
           >
             <View style={Styles.row}>
-              <Text style={Styles.listText}>
-                {item.title.substr(0, 20)}
-              </Text>
+              <Text style={Styles.listText}>{item.title}</Text>
               <TouchableOpacity onPress={() => delBlog(item.id)}>
                 <FontAwesome name="trash" size={24} color="black" />
               </TouchableOpacity>
@@ -54,7 +61,6 @@ const Index = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
-
     </View>
   );
 };
@@ -83,7 +89,6 @@ const Styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 6,
     width: 200,
-   
   },
   btnText: {
     fontSize: 22,

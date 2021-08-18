@@ -1,19 +1,12 @@
 import React, { useReducer } from "react";
+import jsonServer from "../api/jsonServer";
 
 const BlogContext = React.createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "addBlog":
-      return [
-        ...state,
-        {
-          id: Math.floor(Math.random() * 99999),
-          title: action.payload.title,
-          content: action.payload.content,
-        },
-      ];
-
+    case "find_json_Blogs":
+      return action.payload;
     case "EditBlog":
       const result = state.find((blog) => blog.id === action.payload.id);
       result.title = action.payload.title;
@@ -29,22 +22,47 @@ const reducer = (state, action) => {
 export const BlogProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, []);
 
-  const addBlog = (title, content) => {
-    dispatch({ type: "addBlog", payload: { title, content } });
+  const findJsonBlogs = async () => {
+    try {
+      const result = await jsonServer.get("/blogPost");
+      dispatch({ type: "find_json_Blogs", payload: result.data });
+    } catch (err) {
+      throw Error("request failed");
+    }
   };
 
-  const delBlog = (id) => {
-    dispatch({ type: "deleteBlog", payload: id });
+  const addBlog = async (title, content) => {
+    const result = await jsonServer.post("/blogPost", {
+      title,
+      content,
+    });
   };
 
-  const EditBlog = (id, title, content) => {
+  const delBlog = async (id) => {
+    try {
+      await jsonServer.delete(`/blogPost/${id}`);
+      dispatch({ type: "deleteBlog", payload: id });
+    } catch (err) {
+      console.log("error while deleting", err);
+    }
+  };
+
+  const EditBlog = async (id, title, content) => {
+    try {
+      await jsonServer.put(`/blogPost/${id}`, {
+        title,
+        content,
+      });
+    } catch (err) {
+      console.log("failed to del", err);
+    }
     dispatch({ type: "EditBlog", payload: { id, title, content } });
   };
 
   return (
     <BlogContext.Provider
-      value={{ blogPost: state, addBlog, delBlog, EditBlog }}
-    > 
+      value={{ blogPost: state, addBlog, delBlog, EditBlog, findJsonBlogs }}
+    >
       {children}
     </BlogContext.Provider>
   );
